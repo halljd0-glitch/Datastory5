@@ -56,13 +56,14 @@ speciestotal<-birds_data%>%group_by(species)%>%summarise(count=n())
 
 ```
 
-#### Bird counts and identifications were collected from nine locations on Sewanee's campus. Birds were identified through visuals or vocalizations and then recorded using a shiny data entry app.
+#### **Bird counts and identifications were collected from nine locations on Sewanee's campus. Birds were identified through visuals or vocalizations and then recorded using a shiny data entry app.**
 
-## Column {.tabset data-width="850,"}
+## Column {.tabset data-width="800,"}
 
 ### **Map of Observation Locations**
+Map shows the locations of observations along with site specific data. When markers are selected, data on the number of unique species and total number of birds seen is displayed. 
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.height=7}
 totals%>%leaflet()%>%
   addTiles()%>%
   setView(lng=-85.9211,lat=35.2031,zoom=14)%>%
@@ -71,8 +72,8 @@ totals%>%leaflet()%>%
 
 ### **Observation Counts By Species**
 
-```{r fig.height=8}
-ggplot(speciestotal,aes(y=species,x=count))+geom_bar(stat='identity')+labs(title='Number of Observations of Each Species')+theme_minimal()
+```{r fig.height=8, fig.width=7}
+ggplot(speciestotal,aes(y=species,x=count))+geom_bar(stat='identity')+labs(title='Number of Observations of Each Species',caption='displays how many birds within each species across all locations were seen or heard.')+theme_minimal()
 
 ```
 
@@ -82,7 +83,7 @@ ggplot(speciestotal,aes(y=species,x=count))+geom_bar(stat='identity')+labs(title
 buildingid<-birds_data%>%group_by(identifier,building)%>%summarise(total=n(),.groups = "drop")
 
 #making a grouped bar graph of the toatl number of observations made with each identification method
-ggplot(buildingid,aes(x=building,y=total,fill=identifier))+geom_bar(position='dodge',stat = 'identity')
+ggplot(buildingid,aes(x=building,y=total,fill=identifier))+geom_bar(position='dodge',stat = 'identity')+labs(caption='The number of birds identified at each site by either sight or sound.',x='Building')
 
 ```
 
